@@ -35,9 +35,18 @@ public class ApiController {
         return userEntity.toString();
     }
 
-    @GetMapping("/username")
-    public void username(String username) {
-        log.info("username: {}", username);
-        log.info("result: {}", userAccountService.findUser(username));
+    @GetMapping("/v1/user/hello")
+    public String userHello() {
+        return "hello world!!";
+    }
+
+    @GetMapping("/v1/manager/hello")
+    public String managerHello() {
+        return "hello manager!!";
+    }
+
+    @GetMapping("/v1/admin/hello")
+    public String adminHello() {
+        return "hello admin!!";
     }
 }
