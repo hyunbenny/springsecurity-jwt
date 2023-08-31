@@ -1,13 +1,19 @@
 package com.hyunbenny.springsecurityjwt.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.hyunbenny.springsecurityjwt.controller.request.JoinRequest;
+import com.hyunbenny.springsecurityjwt.domain.UserAccount;
+import com.hyunbenny.springsecurityjwt.service.UserAccountService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ApiController {
+
+    private final UserAccountService userAccountService;
 
     @GetMapping("/home")
     public String home() {
@@ -19,4 +25,19 @@ public class ApiController {
         return "hello world";
     }
 
+    @PostMapping("/join")
+    public String join(@RequestBody JoinRequest request) {
+        log.info("request: {}", request);
+
+        UserAccount userEntity = userAccountService.join(request);
+        log.info("userEntity: {}", userEntity);
+
+        return userEntity.toString();
+    }
+
+    @GetMapping("/username")
+    public void username(String username) {
+        log.info("username: {}", username);
+        log.info("result: {}", userAccountService.findUser(username));
+    }
 }

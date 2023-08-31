@@ -1,6 +1,7 @@
 package com.hyunbenny.springsecurityjwt.config;
 
 import com.hyunbenny.springsecurityjwt.filter.CustomFilter1;
+import com.hyunbenny.springsecurityjwt.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,7 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.addFilter(new CustomFilter1()); // Filter는 Security Filter에 순서를 정하지 않고 등록할 수 없다. (-> addBefore(), addAfter()를 써야 한다.)
 //        http.addFilterBefore(new CustomFilter1(), BasicAuthenticationFilter.class); // 굳이 시큐리티 필터에 걸 필요 없이 FilterConfig를 따로 만들어서 걸어보자.
 
-        http.addFilterBefore(new CustomFilter1(), SecurityContextPersistenceFilter.class);
 
 
         http
@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager())) // AuthenticationManager를 넘겨줘야 한다. (AuthenticationManager는 WebSecurityConfigurerAdapter가 가지고 있다.)
 
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**").access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
