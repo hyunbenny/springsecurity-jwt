@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FilterConfig {
 
-    @Bean
-    public FilterRegistrationBean<CustomFilter1> customFilter1() {
-        FilterRegistrationBean<CustomFilter1> bean = new FilterRegistrationBean<>(new CustomFilter1());
-        bean.addUrlPatterns("/*");
-        bean.setOrder(0); // 0이 가장 높은 우선순위(== 가장 먼저 실행된다.)
-
-        return bean;
-    }
+//    @Bean
+//    public FilterRegistrationBean<CustomFilter1> customFilter1() {
+//        FilterRegistrationBean<CustomFilter1> bean = new FilterRegistrationBean<>(new CustomFilter1());
+//        bean.addUrlPatterns("/*");
+//        bean.setOrder(0); // 0이 가장 높은 우선순위(== 가장 먼저 실행된다.)
+//
+//        return bean;
+//    }
 
     @Bean
     public FilterRegistrationBean<CustomFilter2> customFilter2() {

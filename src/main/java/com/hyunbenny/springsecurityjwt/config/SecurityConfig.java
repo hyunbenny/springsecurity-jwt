@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -34,6 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilter(corsFilter);
 //        http.addFilter(new CustomFilter1()); // Filter는 Security Filter에 순서를 정하지 않고 등록할 수 없다. (-> addBefore(), addAfter()를 써야 한다.)
 //        http.addFilterBefore(new CustomFilter1(), BasicAuthenticationFilter.class); // 굳이 시큐리티 필터에 걸 필요 없이 FilterConfig를 따로 만들어서 걸어보자.
+
+        http.addFilterBefore(new CustomFilter1(), SecurityContextPersistenceFilter.class);
+
 
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
